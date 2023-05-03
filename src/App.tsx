@@ -1,10 +1,13 @@
-import "./my-sass.scss";
+import { Basket } from "./components/Basket";
+import { Tree } from "./components/Tree";
+import "./styles/my-sass.scss";
 
 function App() {
   return (
-    <>
-      <h1>deneme</h1>
-    </>
+    <main className="mainContainer ">
+      <Tree />
+      <Basket />
+    </main>
   );
 }
 
