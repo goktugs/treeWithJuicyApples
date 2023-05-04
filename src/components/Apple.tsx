@@ -1,4 +1,4 @@
-import { AppleSvg } from "../assets/apple";
+import { AppleSvg } from "../assets/appleSvg";
 import React from "react";
 
 interface AppleProps {
@@ -8,7 +8,7 @@ interface AppleProps {
 export const Apple: React.FC<AppleProps> = ({ className }) => {
   return (
     <div className={`apple ${className}`}>
-      <AppleSvg width="50" height="50" />
+      <AppleSvg width="50px" height="50px" />
     </div>
   );
 };
