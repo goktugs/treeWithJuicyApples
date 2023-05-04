@@ -3,10 +3,10 @@
 
 
   ### _Protel Frontend Case_
-<p align="center"> 
+
 [To Get Red Apple Click Me ](https://tree-with-juicy-apples.vercel.app/)
-![alt text](https://cdn.iconscout.com/icon/premium/png-512-thumb/falling-apple-3840957-3188982.png?f=avif&w=48 "Logo Title Text 1")
-</p>
+![alt text](https://cdn.iconscout.com/icon/premium/png-512-thumb/falling-apple-3840957-3188982.png?f=avif&w=48 "")
+
 <p align="center">
 This project is a simple front-end implementation of a tree with apples that can be shaken to make the apples fall and collected in a basket. The purpose of this project is to demonstrate the ability to create separate components that interact with local state or Redux and to implement animated effects.
 </p>
