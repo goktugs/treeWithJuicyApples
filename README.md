@@ -8,7 +8,12 @@
 
 This project is a simple front-end implementation of a tree with apples that can be shaken to make the apples fall and collected in a basket. The purpose of this project is to demonstrate the ability to create separate components that interact with local state or Redux and to implement animated effects.
 
-https://imgur.com/a/uU221nj
+![](https://imgur.com/a/uU221nj)
+
+Solarized dark             |  Solarized Ocean
+:-------------------------:|:-------------------------:
+![](https://user-images.githubusercontent.com/86847572/236298944-6333a8ec-a8d8-49b5-8b8b-38dbb2daec9b.png)  |  ![](https://user-images.githubusercontent.com/86847572/236299106-665899fc-7ba2-45ea-aaef-7f693d055e02.png)
+
 
 <img width="600" alt="Screenshot 2023-05-04 at 21 36 20" src="https://user-images.githubusercontent.com/86847572/236298944-6333a8ec-a8d8-49b5-8b8b-38dbb2daec9b.png">
 <img width="600" alt="Screenshot 2023-05-04 at 21 43 28" src="https://user-images.githubusercontent.com/86847572/236299106-665899fc-7ba2-45ea-aaef-7f693d055e02.png">
