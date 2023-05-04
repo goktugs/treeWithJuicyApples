@@ -8,6 +8,12 @@
 
 This project is a simple front-end implementation of a tree with apples that can be shaken to make the apples fall and collected in a basket. The purpose of this project is to demonstrate the ability to create separate components that interact with local state or Redux and to implement animated effects.
 
+<img width="1512" alt="Screenshot 2023-05-04 at 21 36 20" src="https://user-images.githubusercontent.com/86847572/236298944-6333a8ec-a8d8-49b5-8b8b-38dbb2daec9b.png">
+<img width="1512" alt="Screenshot 2023-05-04 at 21 43 28" src="https://user-images.githubusercontent.com/86847572/236299106-665899fc-7ba2-45ea-aaef-7f693d055e02.png">
+
+
+https://user-images.githubusercontent.com/86847572/236298653-35461bde-a3ef-4485-a7aa-1ab78c120bde.mov
+
 
 ## Getting Started
 
