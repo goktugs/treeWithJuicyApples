@@ -23,7 +23,7 @@ export const Tree = () => {
 
   useEffect(() => {
     // her bir elmaya bir index atıyorum ve elmaları render ederken bu indexleri kullanıyorum.
-    setCreatedApples([0, 1, 2, 3, 4]);
+    setCreatedApples([0, 1, 2, 3, 4, 5]);
   }, []);
 
   const handleTreeClick = () => {
@@ -64,7 +64,7 @@ export const Tree = () => {
 
   const handleResetButtonClick = () => {
     dispatch(resetApples());
-    setCreatedApples([0, 1, 2, 3, 4]);
+    setCreatedApples([0, 1, 2, 3, 4, 5]);
   };
 
   return (

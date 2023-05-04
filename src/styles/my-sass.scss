@@ -67,6 +67,12 @@ body {
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
+  :active {
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+  }
+
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .mainContainer {
@@ -102,6 +108,9 @@ body {
       &.falling-4 {
         animation-delay: 4s;
       }
+      &.falling-5 {
+        animation-delay: 5s;
+      }
       &.apple-0 {
         top: 20%;
         left: 40%;
@@ -122,6 +131,10 @@ body {
         top: 30%;
         left: 70%;
       }
+      &.apple-5 {
+        top: 15%;
+        left: 20%;
+      }
     }
   }
   .basketContainer {
@@ -133,34 +146,40 @@ body {
       &.basket-apple-0 {
         position: absolute;
         top: 35%;
-        left: 15%;
+        left: 20%;
         transform: translateX(-15%);
         z-index: -1;
       }
       &.basket-apple-1 {
         position: absolute;
         top: 35%;
-        left: 35%;
-        transform: translateX(-15%);
+        left: 45%;
+        transform: translateX(-35%);
         z-index: -1;
       }
       &.basket-apple-2 {
         position: absolute;
         top: 35%;
-        left: 55%;
-        transform: translateX(-15%);
+        left: 70%;
+        transform: translateX(-55%);
         z-index: -1;
       }
       &.basket-apple-3 {
         position: absolute;
-        top: 20%;
-        left: 25%;
-        transform: translateX(-15%);
+        top: 22%;
+        left: 32%;
+        transform: translateX(-25%);
       }
       &.basket-apple-4 {
         position: absolute;
-        top: 20%;
-        left: 45%;
+        top: 22%;
+        left: 57%;
+        transform: translateX(-45%);
+      }
+      &.basket-apple-5 {
+        position: absolute;
+        top: 10%;
+        left: 38%;
         transform: translateX(-15%);
       }
     }

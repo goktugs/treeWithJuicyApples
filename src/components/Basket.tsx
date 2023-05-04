@@ -26,7 +26,7 @@ export const Basket = () => {
 
   return (
     <div className="basketContainer">
-      <BasketSvg width="150px" height="150px" />
+      <BasketSvg width="200px" height="200px" />
       {applesInBasket.map((index) => (
         <Apple key={index} className={`basket-apple-${index}`} />
       ))}
