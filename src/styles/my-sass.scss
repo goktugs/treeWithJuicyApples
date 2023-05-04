@@ -12,6 +12,57 @@ body {
   box-sizing: border-box;
   width: 100%;
   height: 100vh;
+  background: url(../assets/windowsbg.jpeg) no-repeat center center fixed;
+}
+
+@keyframes shake {
+  10%,
+  90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%,
+  80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%,
+  60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    top: 87%;
+  }
+}
+
+.tree {
+  &.shaking {
+    animation: shake 0.5s linear infinite;
+    animation-duration: 3s;
+  }
+}
+
+.resetButton {
+  position: absolute;
+  top: 10;
+  right: 10%;
+  background: #fff;
+  border: 1px solid #000;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .mainContainer {
@@ -19,25 +70,94 @@ body {
   align-items: center;
   justify-content: center;
   .treeContainer {
-    width: 50%;
+    width: 45%;
     min-width: 500px;
     height: 100%;
+    display: inline-block;
     position: relative;
+    :hover {
+      cursor: pointer;
+    }
     .apple {
       position: absolute;
-      width: 30px;
-      height: 30px;
-      &.apple1 {
-        top: 20%;
-        left: 20%;
+      &.falling {
+        animation: fall 1s ease-in forwards;
       }
-      &.apple2 {
+      &.falling-0 {
+        animation-delay: 0s;
+      }
+      &.falling-1 {
+        animation-delay: 1s;
+      }
+      &.falling-2 {
+        animation-delay: 2s;
+      }
+      &.falling-3 {
+        animation-delay: 3s;
+      }
+      &.falling-4 {
+        animation-delay: 4s;
+      }
+      &.apple-0 {
+        top: 20%;
+        left: 40%;
+      }
+      &.apple-1 {
         top: 35%;
         left: 35%;
       }
-      &.apple3 {
+      &.apple-2 {
         top: 10%;
         left: 60%;
+      }
+      &.apple-3 {
+        top: 20%;
+        left: 80%;
+      }
+      &.apple-4 {
+        top: 30%;
+        left: 70%;
+      }
+    }
+  }
+  .basketContainer {
+    position: absolute;
+    bottom: 0;
+    right: 15%;
+    transform: translateX(-15%);
+    .apple {
+      &.basket-apple-0 {
+        position: absolute;
+        top: 35%;
+        left: 15%;
+        transform: translateX(-15%);
+        z-index: -1;
+      }
+      &.basket-apple-1 {
+        position: absolute;
+        top: 35%;
+        left: 35%;
+        transform: translateX(-15%);
+        z-index: -1;
+      }
+      &.basket-apple-2 {
+        position: absolute;
+        top: 35%;
+        left: 55%;
+        transform: translateX(-15%);
+        z-index: -1;
+      }
+      &.basket-apple-3 {
+        position: absolute;
+        top: 20%;
+        left: 25%;
+        transform: translateX(-15%);
+      }
+      &.basket-apple-4 {
+        position: absolute;
+        top: 20%;
+        left: 45%;
+        transform: translateX(-15%);
       }
     }
   }
