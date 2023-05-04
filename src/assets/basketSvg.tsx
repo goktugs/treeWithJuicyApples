@@ -1,4 +1,6 @@
-export const BasketSvg = () => (
+import { SVGAttributes } from "react";
+
+export const BasketSvg = (props: SVGAttributes<SVGElement>) => (
   <svg
     // xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
     xmlns="http://www.w3.org/2000/svg"
@@ -8,6 +10,7 @@ export const BasketSvg = () => (
     id="svg2"
     viewBox="0 0 461.96 450.75"
     version="1.1"
+    {...props}
   >
     <defs id="defs4">
       <filter id="filter4456" colorInterpolationFilters="sRGB">

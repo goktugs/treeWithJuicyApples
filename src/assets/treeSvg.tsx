@@ -1,10 +1,11 @@
-export const TreeSvg = () => (
+export const TreeSvg = (props: React.SVGAttributes<SVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     enableBackground="new 0 0 216.55 243.8"
     version="1.1"
     viewBox="0 0 216.55 243.8"
     xmlSpace="preserve"
+    {...props}
   >
     <g clipRule="evenodd" fillRule="evenodd">
       <radialGradient
