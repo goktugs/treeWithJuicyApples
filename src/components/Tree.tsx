@@ -6,6 +6,8 @@ import {
   setApplesFalling,
   incrementBasketCount,
   resetApples,
+  incrementApple,
+  decrementApple,
 } from "../store/appleSlice";
 
 import { RootState } from "../store/store";
@@ -67,8 +69,46 @@ export const Tree = () => {
     setCreatedApples([0, 1, 2, 3, 4, 5]);
   };
 
+  const incrementAppleNumber = () => {
+    dispatch(incrementApple(1));
+
+    if (createdApples.length >= 10) return;
+
+    setCreatedApples((prevCreatedApples) => {
+      const lastAppleIndex = prevCreatedApples[prevCreatedApples.length - 1];
+
+      if (createdApples.length == 0) {
+        return [0];
+      }
+
+      return [...prevCreatedApples, lastAppleIndex + 1];
+    });
+  };
+
+  const decrementAppleNumber = () => {
+    dispatch(decrementApple(1));
+
+    if (createdApples.length <= 0) return;
+
+    setCreatedApples((prevCreatedApples) => {
+      const lastAppleIndex = prevCreatedApples[prevCreatedApples.length - 1];
+      return prevCreatedApples.filter(
+        (appleIndex) => appleIndex !== lastAppleIndex
+      );
+    });
+  };
+
   return (
     <>
+      {createdApples.length == 10 && alert("You can't add more apples!")}
+      <div className="incDecContainer">
+        <button onClick={decrementAppleNumber} className="countChanger">
+          -
+        </button>
+        <button onClick={incrementAppleNumber} className="countChanger">
+          +
+        </button>
+      </div>
       <button className="resetButton" onClick={handleResetButtonClick}>
         Reset apples and basket
       </button>
