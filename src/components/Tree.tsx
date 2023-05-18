@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { TreeSvg } from "../assets/treeSvg";
 import { Apple } from "./Apple";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,6 +6,8 @@ import {
   setApplesFalling,
   incrementBasketCount,
   resetApples,
+  incrementAppleCount,
+  decrementAppleCount,
 } from "../store/appleSlice";
 
 import { RootState } from "../store/store";
@@ -13,18 +15,18 @@ import { RootState } from "../store/store";
 export const Tree = () => {
   const dispatch = useDispatch();
 
+  const { appleCount } = useSelector((state: RootState) => state.apple);
+
   const applesFalling = useSelector(
     (state: RootState) => state.apple.applesFalling
   );
   const [createdApples, setCreatedApples] = useState<number[]>([]);
   const [treeShaking, setTreeShaking] = useState<boolean>(false);
 
-  const treeRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
-    // her bir elmaya bir index atıyorum ve elmaları render ederken bu indexleri kullanıyorum.
-    setCreatedApples([0, 1, 2, 3, 4, 5]);
-  }, []);
+    // elma sayısını state'de tuttuğum applecount a göre oluşturuyorum.
+    setCreatedApples(Array.from({ length: appleCount }, (_, i) => i));
+  }, [appleCount]);
 
   const handleTreeClick = () => {
     // burada elmaların ağaçtan düştüğünü kontrol ediyorum
@@ -64,11 +66,39 @@ export const Tree = () => {
 
   const handleResetButtonClick = () => {
     dispatch(resetApples());
-    setCreatedApples([0, 1, 2, 3, 4, 5]);
+    setCreatedApples(Array.from({ length: appleCount }, (_, i) => i));
+  };
+
+  const handleIncrementAppleCount = () => {
+    if (appleCount < 10) {
+      dispatch(incrementAppleCount());
+      const newApplesFalling = createdApples.map(() => false);
+      dispatch(setApplesFalling(newApplesFalling));
+    } else {
+      alert("You can't add more apples!");
+    }
+  };
+
+  const handleDecrementAppleCount = () => {
+    if (appleCount > 0) {
+      dispatch(decrementAppleCount());
+      const newApplesFalling = createdApples.map(() => false);
+      dispatch(setApplesFalling(newApplesFalling));
+    } else {
+      alert("You can't remove more apples!");
+    }
   };
 
   return (
     <>
+      <div className="incDecContainer">
+        <button onClick={handleDecrementAppleCount} className="countChanger">
+          -
+        </button>
+        <button onClick={handleIncrementAppleCount} className="countChanger">
+          +
+        </button>
+      </div>
       <button className="resetButton" onClick={handleResetButtonClick}>
         Reset apples and basket
       </button>
@@ -76,7 +106,6 @@ export const Tree = () => {
         <div
           className={`tree ${treeShaking ? "shaking" : ""}`}
           onClick={handleTreeClick}
-          ref={treeRef}
         >
           <TreeSvg />
         </div>
