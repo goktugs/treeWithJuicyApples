@@ -9,7 +9,7 @@ interface AppleState {
 const initialState: AppleState = {
   applesFalling: [],
   basketCount: 0,
-  appleCount: 0,
+  appleCount: 5,
 };
 
 export const appleSlice = createSlice({
@@ -26,11 +26,15 @@ export const appleSlice = createSlice({
       state.applesFalling = [false, false, false, false, false];
       state.basketCount = 0;
     },
-    incrementApple: (state, action: PayloadAction<number>) => {
-      state.appleCount += action.payload;
+    incrementAppleCount: (state) => {
+      if (state.appleCount < 10) {
+        state.appleCount += 1;
+      }
     },
-    decrementApple: (state, action: PayloadAction<number>) => {
-      state.appleCount -= action.payload;
+    decrementAppleCount: (state) => {
+      if (state.appleCount > 0) {
+        state.appleCount -= 1;
+      }
     },
   },
 });
@@ -39,8 +43,8 @@ export const {
   setApplesFalling,
   incrementBasketCount,
   resetApples,
-  incrementApple,
-  decrementApple,
+  incrementAppleCount,
+  decrementAppleCount,
 } = appleSlice.actions;
 
 export default appleSlice.reducer;
