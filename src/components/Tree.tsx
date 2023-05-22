@@ -11,6 +11,8 @@ import {
   setAppleColor,
 } from "../store/appleSlice";
 
+import "../styles/Tree.scss";
+
 import { RootState } from "../store/store";
 
 export const Tree = () => {
@@ -29,6 +31,11 @@ export const Tree = () => {
     useState<boolean>(false);
   const [disableResetButton, setDisableResetButton] = useState<boolean>(false);
 
+  const [showExtraFeatures, setShowExtraFeatures] = useState<boolean>(false);
+
+  const handleToggleClick = () => {
+    setShowExtraFeatures(!showExtraFeatures);
+  };
   useEffect(() => {
     // elma sayısını state'de tuttuğum applecount a göre oluşturuyorum.
     setCreatedApples(Array.from({ length: appleCount }, (_, i) => i));
@@ -107,18 +114,42 @@ export const Tree = () => {
 
   return (
     <>
-      <div
-        className={`incDecContainer ${
-          disableIncDecButton ? "disableButton" : ""
-        } `}
-      >
-        <button onClick={handleDecrementAppleCount} className="countChanger">
-          -
-        </button>
-        <button onClick={handleIncrementAppleCount} className="countChanger">
-          +
-        </button>
-      </div>
+      <button className="handleExtraFutures" onClick={handleToggleClick}>
+        {showExtraFeatures ? "Hide extra features" : "Show extra features"}
+      </button>
+      {showExtraFeatures && (
+        <>
+          <div
+            className={`incDecContainer ${
+              disableIncDecButton ? "disableButton" : ""
+            } `}
+          >
+            <button
+              onClick={handleDecrementAppleCount}
+              className="countChanger"
+            >
+              -
+            </button>
+            <button
+              onClick={handleIncrementAppleCount}
+              className="countChanger"
+            >
+              +
+            </button>
+          </div>
+          <div className="colorChanger">
+            <input
+              type="color"
+              id="apple1"
+              name="apple1"
+              value={appleColor}
+              onChange={handleColorChange}
+            />
+            <label htmlFor="apple1">Apple1</label>
+          </div>
+        </>
+      )}
+
       <button
         className={`resetButton ${disableResetButton ? "disableButton" : ""}`}
         onClick={handleResetButtonClick}
@@ -141,16 +172,6 @@ export const Tree = () => {
             }`}
           />
         ))}
-      </div>
-      <div className="colorChanger">
-        <input
-          type="color"
-          id="appleColor"
-          name="appleColor"
-          value={appleColor}
-          onChange={handleColorChange}
-        />
-        <label htmlFor="appleColor">Change Apple Color</label>
       </div>
     </>
   );

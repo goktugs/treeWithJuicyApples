@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { BasketSvg } from "../assets/basketSvg";
 import { Apple } from "./Apple";
-
+import "../styles/Basket.scss";
 export const Basket = () => {
   const basketCount = useSelector(
     (state: RootState) => state.apple.basketCount

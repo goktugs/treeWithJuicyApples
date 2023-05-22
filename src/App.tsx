@@ -1,6 +1,7 @@
 import { Basket } from "./components/Basket";
 import { Tree } from "./components/Tree";
-import "./styles/my-sass.scss";
+import "./styles/main.scss";
+import "./styles/reset.scss";
 
 function App() {
   return (

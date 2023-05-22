@@ -1,0 +1,158 @@
+@keyframes shake {
+  10%,
+  90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%,
+  80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%,
+  60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    top: 87%;
+  }
+}
+
+.treeContainer {
+  width: 45%;
+  min-width: 500px;
+  height: 100%;
+  display: inline-block;
+  position: relative;
+  :hover {
+    cursor: pointer;
+  }
+  .apple {
+    position: absolute;
+    &.falling {
+      animation: fall 1s ease-in forwards;
+    }
+    &.falling-0 {
+      animation-delay: 0s;
+    }
+    &.falling-1 {
+      animation-delay: 1s;
+    }
+    &.falling-2 {
+      animation-delay: 2s;
+    }
+    &.falling-3 {
+      animation-delay: 3s;
+    }
+    &.falling-4 {
+      animation-delay: 4s;
+    }
+    &.falling-5 {
+      animation-delay: 5s;
+    }
+    &.falling-6 {
+      animation-delay: 6s;
+    }
+    &.falling-7 {
+      animation-delay: 7s;
+    }
+    &.falling-8 {
+      animation-delay: 8s;
+    }
+    &.falling-9 {
+      animation-delay: 9s;
+    }
+    &.apple-0 {
+      top: 20%;
+      left: 40%;
+    }
+    &.apple-1 {
+      top: 35%;
+      left: 35%;
+    }
+    &.apple-2 {
+      top: 10%;
+      left: 60%;
+    }
+    &.apple-3 {
+      top: 20%;
+      left: 80%;
+    }
+    &.apple-4 {
+      top: 30%;
+      left: 70%;
+    }
+    &.apple-5 {
+      top: 15%;
+      left: 20%;
+    }
+    &.apple-6 {
+      top: 25%;
+      left: 30%;
+    }
+    &.apple-7 {
+      top: 35%;
+      left: 50%;
+    }
+    &.apple-8 {
+      top: 15%;
+      left: 50%;
+    }
+    &.apple-9 {
+      top: 25%;
+      left: 60%;
+    }
+  }
+
+  .tree {
+    &.shaking {
+      animation: shake 0.5s linear infinite;
+      animation-duration: 3s;
+    }
+  }
+}
+
+.handleExtraFutures {
+  position: absolute;
+  top: 20%;
+  left: 10%;
+  font-family: system-ui, sans-serif;
+  font-size: 1.4rem;
+  cursor: pointer;
+  padding: 0.1em 0.6em;
+  font-weight: bold;
+  border: none;
+
+  --c: #229091; /* the color*/
+
+  box-shadow: 0 0 0 0.1em inset var(--c);
+  --_g: linear-gradient(var(--c) 0 0) no-repeat;
+  background: var(--_g) calc(var(--_p, 0%) - 100%) 0%,
+    var(--_g) calc(200% - var(--_p, 0%)) 0%,
+    var(--_g) calc(var(--_p, 0%) - 100%) 100%,
+    var(--_g) calc(200% - var(--_p, 0%)) 100%;
+  background-size: 50.5% calc(var(--_p, 0%) / 2 + 0.5%);
+  outline-offset: 0.1em;
+  transition: background-size 0.4s, background-position 0s 0.4s;
+}
+button:hover {
+  --_p: 100%;
+  transition: background-position 0.4s, background-size 0s;
+}
+button:active {
+  box-shadow: 0 0 9e9Q inset #0009;
+  background-color: var(--c);
+  color: #fff;
+}
