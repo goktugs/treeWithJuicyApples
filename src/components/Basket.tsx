@@ -8,6 +8,7 @@ export const Basket = () => {
   const basketCount = useSelector(
     (state: RootState) => state.apple.basketCount
   );
+  const appleColor = useSelector((state: RootState) => state.apple.appleColor);
   const [applesInBasket, setApplesInBasket] = useState<number[]>([]);
 
   // Burada redux storedaki veri ile local veriyi karşılaştırarak eşit olmadığı durumda local veriyi güncelliyorum.
@@ -28,7 +29,11 @@ export const Basket = () => {
     <div data-testid="basket-apple" className="basketContainer">
       <BasketSvg width="200px" height="200px" />
       {applesInBasket.map((index) => (
-        <Apple key={index} className={`basket-apple-${index}`} />
+        <Apple
+          key={index}
+          className={`basket-apple-${index}`}
+          color={appleColor}
+        />
       ))}
     </div>
   );

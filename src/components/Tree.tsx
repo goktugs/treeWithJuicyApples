@@ -8,6 +8,7 @@ import {
   resetApples,
   incrementAppleCount,
   decrementAppleCount,
+  setAppleColor,
 } from "../store/appleSlice";
 
 import { RootState } from "../store/store";
@@ -15,13 +16,16 @@ import { RootState } from "../store/store";
 export const Tree = () => {
   const dispatch = useDispatch();
 
-  const { appleCount } = useSelector((state: RootState) => state.apple);
+  const { appleCount, appleColor } = useSelector(
+    (state: RootState) => state.apple
+  );
 
   const applesFalling = useSelector(
     (state: RootState) => state.apple.applesFalling
   );
   const [createdApples, setCreatedApples] = useState<number[]>([]);
   const [treeShaking, setTreeShaking] = useState<boolean>(false);
+  const [disableButton, setDisableButton] = useState<boolean>(false);
 
   useEffect(() => {
     // elma sayısını state'de tuttuğum applecount a göre oluşturuyorum.
@@ -29,6 +33,7 @@ export const Tree = () => {
   }, [appleCount]);
 
   const handleTreeClick = () => {
+    setDisableButton(true);
     // burada elmaların ağaçtan düştüğünü kontrol ediyorum
     if (createdApples.every((_, index) => applesFalling[index])) {
       alert("There are no apples left on tree!");
@@ -67,6 +72,7 @@ export const Tree = () => {
   const handleResetButtonClick = () => {
     dispatch(resetApples());
     setCreatedApples(Array.from({ length: appleCount }, (_, i) => i));
+    setDisableButton(false);
   };
 
   const handleIncrementAppleCount = () => {
@@ -75,7 +81,7 @@ export const Tree = () => {
       const newApplesFalling = createdApples.map(() => false);
       dispatch(setApplesFalling(newApplesFalling));
     } else {
-      alert("You can't add more apples!");
+      alert("You can't add more than 10 apples!");
     }
   };
 
@@ -88,10 +94,15 @@ export const Tree = () => {
       alert("You can't remove more apples!");
     }
   };
+  const handleColorChange = (e) => {
+    dispatch(setAppleColor(e.target.value));
+  };
 
   return (
     <>
-      <div className="incDecContainer">
+      <div
+        className={`incDecContainer ${disableButton ? "disableButton" : ""} `}
+      >
         <button onClick={handleDecrementAppleCount} className="countChanger">
           -
         </button>
@@ -112,11 +123,22 @@ export const Tree = () => {
         {createdApples.map((index) => (
           <Apple
             key={index}
+            color={appleColor}
             className={`apple-${index} ${
               applesFalling[index] ? "falling falling-" + index : ""
             }`}
           />
         ))}
+      </div>
+      <div className="colorChanger">
+        <input
+          type="color"
+          id="appleColor"
+          name="appleColor"
+          value={appleColor}
+          onChange={handleColorChange}
+        />
+        <label htmlFor="appleColor">Change Apple Color</label>
       </div>
     </>
   );

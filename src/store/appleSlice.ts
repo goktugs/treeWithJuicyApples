@@ -4,12 +4,14 @@ interface AppleState {
   applesFalling: boolean[];
   basketCount: number;
   appleCount: number;
+  appleColor: string;
 }
 
 const initialState: AppleState = {
   applesFalling: [],
   basketCount: 0,
   appleCount: 5,
+  appleColor: "#e66465",
 };
 
 export const appleSlice = createSlice({
@@ -36,6 +38,9 @@ export const appleSlice = createSlice({
         state.appleCount -= 1;
       }
     },
+    setAppleColor: (state, action: PayloadAction<string>) => {
+      state.appleColor = action.payload;
+    },
   },
 });
 
@@ -44,6 +49,7 @@ export const {
   incrementBasketCount,
   resetApples,
   incrementAppleCount,
+  setAppleColor,
   decrementAppleCount,
 } = appleSlice.actions;
 
