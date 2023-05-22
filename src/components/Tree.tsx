@@ -25,7 +25,9 @@ export const Tree = () => {
   );
   const [createdApples, setCreatedApples] = useState<number[]>([]);
   const [treeShaking, setTreeShaking] = useState<boolean>(false);
-  const [disableButton, setDisableButton] = useState<boolean>(false);
+  const [disableIncDecButton, setDisableIncDecButton] =
+    useState<boolean>(false);
+  const [disableResetButton, setDisableResetButton] = useState<boolean>(false);
 
   useEffect(() => {
     // elma sayısını state'de tuttuğum applecount a göre oluşturuyorum.
@@ -33,7 +35,8 @@ export const Tree = () => {
   }, [appleCount]);
 
   const handleTreeClick = () => {
-    setDisableButton(true);
+    setDisableIncDecButton(true);
+    setDisableResetButton(true);
     // burada elmaların ağaçtan düştüğünü kontrol ediyorum
     if (createdApples.every((_, index) => applesFalling[index])) {
       alert("There are no apples left on tree!");
@@ -66,13 +69,17 @@ export const Tree = () => {
       setTimeout(() => {
         setTreeShaking(false);
       }, 3000);
+
+      setTimeout(() => {
+        setDisableResetButton(false);
+      }, 1000 * appleCount + 3000);
     }
   };
 
   const handleResetButtonClick = () => {
     dispatch(resetApples());
     setCreatedApples(Array.from({ length: appleCount }, (_, i) => i));
-    setDisableButton(false);
+    setDisableIncDecButton(false);
   };
 
   const handleIncrementAppleCount = () => {
@@ -101,7 +108,9 @@ export const Tree = () => {
   return (
     <>
       <div
-        className={`incDecContainer ${disableButton ? "disableButton" : ""} `}
+        className={`incDecContainer ${
+          disableIncDecButton ? "disableButton" : ""
+        } `}
       >
         <button onClick={handleDecrementAppleCount} className="countChanger">
           -
@@ -110,7 +119,10 @@ export const Tree = () => {
           +
         </button>
       </div>
-      <button className="resetButton" onClick={handleResetButtonClick}>
+      <button
+        className={`resetButton ${disableResetButton ? "disableButton" : ""}`}
+        onClick={handleResetButtonClick}
+      >
         Reset apples and basket
       </button>
       <div data-testid="tree" className="treeContainer">
