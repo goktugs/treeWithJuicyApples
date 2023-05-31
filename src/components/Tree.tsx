@@ -3,13 +3,14 @@ import { TreeSvg } from "../assets/treeSvg";
 import { Apple } from "./Apple";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  setApplesFalling,
-  incrementBasketCount,
+  addApple,
+  removeApple,
   resetApples,
-  incrementAppleCount,
-  decrementAppleCount,
   setAppleColor,
+  setAppleFalling,
+  setAppleInBasket,
 } from "../store/appleSlice";
+import { v4 as uuidv4 } from "uuid";
 
 import "../styles/Tree.scss";
 
@@ -17,99 +18,130 @@ import { RootState } from "../store/store";
 
 export const Tree = () => {
   const dispatch = useDispatch();
-
-  const { appleCount, appleColor } = useSelector(
-    (state: RootState) => state.apple
-  );
-
-  const applesFalling = useSelector(
-    (state: RootState) => state.apple.applesFalling
-  );
-  const [createdApples, setCreatedApples] = useState<number[]>([]);
+  const apples = useSelector((state: RootState) => state.apple.apples);
   const [treeShaking, setTreeShaking] = useState<boolean>(false);
-  const [disableIncDecButton, setDisableIncDecButton] =
-    useState<boolean>(false);
   const [disableResetButton, setDisableResetButton] = useState<boolean>(false);
-
   const [showExtraFeatures, setShowExtraFeatures] = useState<boolean>(false);
 
   const handleToggleClick = () => {
     setShowExtraFeatures(!showExtraFeatures);
   };
+
+  const appleFall = (appleId: string) => {
+    setTimeout(() => {
+      dispatch(setAppleFalling(appleId));
+      setTimeout(() => {
+        dispatch(setAppleInBasket(appleId));
+      }, 2000);
+    }, 1000);
+  };
+
+  function getRandomPosition(min: number, max: number) {
+    const randomPercentage = () =>
+      Math.floor(Math.random() * (max - min + 1) + min) + "%";
+
+    return { top: randomPercentage(), left: randomPercentage() };
+  }
+
   useEffect(() => {
-    // elma sayısını state'de tuttuğum applecount a göre oluşturuyorum.
-    setCreatedApples(Array.from({ length: appleCount }, (_, i) => i));
-  }, [appleCount]);
+    for (let i = 0; i < 5; i++) {
+      const appleId = uuidv4();
+
+      const topPosition = getRandomPosition(10, 36);
+      const leftPosition = getRandomPosition(10, 80);
+
+      dispatch(
+        addApple({
+          id: appleId,
+          color: "#ff0800",
+          isFalling: false,
+          isInBasket: false,
+          top: topPosition.top,
+          left: leftPosition.left,
+        })
+      );
+    }
+  }, [dispatch]);
 
   const handleTreeClick = () => {
-    setDisableIncDecButton(true);
-    setDisableResetButton(true);
-    // burada elmaların ağaçtan düştüğünü kontrol ediyorum
-    if (createdApples.every((_, index) => applesFalling[index])) {
-      alert("There are no apples left on tree!");
-      return;
-    }
     if (!treeShaking) {
       setTreeShaking(true);
       setTimeout(() => {
-        // burda createdapples dizisi uzunluğu kadar true değerlerden oluşan bir dizi oluşturuyorum.
-        // bu dizi elmaların ağaçtan düştüğünü kontrol etmek için kullanılıyor.
-        // butona tıklandığı anda elmalar zaten ağaçtan düşecek demek direkt true'ya çekiyorum.
-
-        const newApplesFalling = createdApples.map(() => true);
-        console.log(newApplesFalling);
-        dispatch(setApplesFalling(newApplesFalling));
-
-        createdApples.forEach((_, index) => {
-          setTimeout(() => {
-            dispatch(incrementBasketCount(1));
-            const updatedApplesFalling = [...newApplesFalling];
-            updatedApplesFalling[index] = false;
-            dispatch(setApplesFalling(updatedApplesFalling));
-            setCreatedApples((prevCreatedApples) =>
-              prevCreatedApples.filter((appleIndex) => appleIndex !== index)
-            );
-          }, index * 1000 + 2000);
+        apples.forEach((apple, index) => {
+          if (!apple.isFalling && !apple.isInBasket) {
+            setTimeout(() => {
+              appleFall(apple.id);
+            }, 1000 * index);
+          }
         });
       }, 3000);
 
       setTimeout(() => {
         setTreeShaking(false);
-      }, 3000);
+      }, 3000 + 1000 * apples.length);
 
       setTimeout(() => {
         setDisableResetButton(false);
-      }, 1000 * appleCount + 3000);
+      }, 3000 * apples.length + 3000);
     }
   };
 
   const handleResetButtonClick = () => {
+    setTreeShaking(false);
+    const existingAppleCount = apples.length;
+
     dispatch(resetApples());
-    setCreatedApples(Array.from({ length: appleCount }, (_, i) => i));
-    setDisableIncDecButton(false);
+
+    for (let i = 0; i < existingAppleCount; i++) {
+      const appleId = uuidv4();
+
+      const topPosition = getRandomPosition(10, 36);
+      const leftPosition = getRandomPosition(10, 80);
+
+      dispatch(
+        addApple({
+          id: appleId,
+          color: "#ff0800",
+          isFalling: false,
+          isInBasket: false,
+          top: topPosition.top,
+          left: leftPosition.left,
+        })
+      );
+    }
   };
 
   const handleIncrementAppleCount = () => {
-    if (appleCount < 10) {
-      dispatch(incrementAppleCount());
-      const newApplesFalling = createdApples.map(() => false);
-      dispatch(setApplesFalling(newApplesFalling));
-    } else {
-      alert("You can't add more than 10 apples!");
-    }
+    const appleId = uuidv4();
+
+    const topPosition = getRandomPosition(10, 36);
+    const leftPosition = getRandomPosition(10, 80);
+
+    dispatch(
+      addApple({
+        id: appleId,
+        color: "#ff0800",
+        isFalling: false,
+        isInBasket: false,
+        top: topPosition.top,
+        left: leftPosition.left,
+      })
+    );
   };
 
   const handleDecrementAppleCount = () => {
-    if (appleCount > 0) {
-      dispatch(decrementAppleCount());
-      const newApplesFalling = createdApples.map(() => false);
-      dispatch(setApplesFalling(newApplesFalling));
-    } else {
-      alert("You can't remove more apples!");
+    if (apples.length > 0) {
+      const appleId = apples[apples.length - 1].id;
+      dispatch(removeApple(appleId));
     }
   };
+
   const handleColorChange = (e) => {
-    dispatch(setAppleColor(e.target.value));
+    const color = e.target.value;
+
+    apples.forEach((apple) => {
+      dispatch(setAppleColor({ id: apple.id, color }));
+    });
   };
 
   return (
@@ -119,11 +151,7 @@ export const Tree = () => {
       </button>
       {showExtraFeatures && (
         <>
-          <div
-            className={`incDecContainer ${
-              disableIncDecButton ? "disableButton" : ""
-            } `}
-          >
+          <div className={`incDecContainer `}>
             <button
               onClick={handleDecrementAppleCount}
               className="countChanger"
@@ -142,7 +170,7 @@ export const Tree = () => {
               type="color"
               id="apple1"
               name="apple1"
-              value={appleColor}
+              value={apples[0]?.color || ""}
               onChange={handleColorChange}
             />
             <label htmlFor="apple1">Apple1</label>
@@ -163,15 +191,19 @@ export const Tree = () => {
         >
           <TreeSvg />
         </div>
-        {createdApples.map((index) => (
-          <Apple
-            key={index}
-            color={appleColor}
-            className={`apple-${index} ${
-              applesFalling[index] ? "falling falling-" + index : ""
-            }`}
-          />
-        ))}
+        {apples.map(
+          (apple) =>
+            !apple.isInBasket && (
+              <Apple
+                key={apple.id}
+                color={apple.color}
+                style={{ top: apple.top, left: apple.left }}
+                className={`apple-${apple.id} ${
+                  apple.isFalling ? "falling falling-" + apple.id : ""
+                }`}
+              />
+            )
+        )}
       </div>
     </>
   );

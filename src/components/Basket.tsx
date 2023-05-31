@@ -1,40 +1,56 @@
-import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { BasketSvg } from "../assets/basketSvg";
 import { Apple } from "./Apple";
 import "../styles/Basket.scss";
-export const Basket = () => {
-  const basketCount = useSelector(
-    (state: RootState) => state.apple.basketCount
-  );
-  const appleColor = useSelector((state: RootState) => state.apple.appleColor);
-  const [applesInBasket, setApplesInBasket] = useState<number[]>([]);
+import { useState, useEffect } from "react";
 
-  // Burada redux storedaki veri ile local veriyi karşılaştırarak eşit olmadığı durumda local veriyi güncelliyorum.
-  // Burda elmaları render etmek için ekstradan state'de tutuyorum çünkü her seferinde redux store'a ulaşmak yeniden render yapar
-  // ve performası düşürür.
+export const Basket = () => {
+  const apples = useSelector((state: RootState) => state.apple.apples);
+  const [applePositions, setApplePositions] = useState<{
+    [id: string]: { top: string; left: string };
+  }>({});
+
+  function getRandomPosition(
+    minTop: number,
+    maxTop: number,
+    minLeft: number,
+    maxLeft: number
+  ) {
+    const randomTop = () =>
+      Math.floor(Math.random() * (maxTop - minTop + 1) + minTop) + "%";
+    const randomLeft = () =>
+      Math.floor(Math.random() * (maxLeft - minLeft + 1) + minLeft) + "%";
+
+    return { top: randomTop(), left: randomLeft() };
+  }
 
   useEffect(() => {
-    if (basketCount !== applesInBasket.length) {
-      const newApplesInBasket = Array.from(
-        { length: basketCount },
-        (_, index) => index
-      );
-      setApplesInBasket(newApplesInBasket);
-    }
-  }, [basketCount, applesInBasket]);
+    apples.forEach((apple) => {
+      if (apple.isInBasket && !(apple.id in applePositions)) {
+        const position = getRandomPosition(25, 35, 10, 69);
+        setApplePositions((positions) => ({
+          ...positions,
+          [apple.id]: position,
+        }));
+      }
+    });
+  }, [apples, applePositions]);
 
   return (
     <div data-testid="basket-apple" className="basketContainer">
       <BasketSvg width="200px" height="200px" />
-      {applesInBasket.map((index) => (
-        <Apple
-          key={index}
-          className={`basket-apple-${index}`}
-          color={appleColor}
-        />
-      ))}
+      {apples.map(
+        (apple) =>
+          apple.isInBasket && (
+            <Apple
+              key={apple.id}
+              className={`basket-apple-${apple.id}`}
+              color={apple.color}
+              style={applePositions[apple.id]}
+            />
+          )
+      )}
     </div>
   );
 };
